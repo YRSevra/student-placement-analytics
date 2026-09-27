@@ -4,6 +4,8 @@ Built with Streamlit, Pandas, and Plotly.
 Investigating factors associated with student placement outcomes.
 """
 
+import os
+os.environ.setdefault("MPLCONFIGDIR", "/tmp/matplotlib")
 from pathlib import Path
 import streamlit as st
 import pandas as pd
@@ -524,8 +526,12 @@ with tab_acad2:
         c_left, c_right = st.columns([3, 2])
         with c_left:
             st.markdown("##### Point-Biserial Correlations with Placement Outcome")
+            try:
+                styled_corr = corr_df.style.background_gradient(subset=['Correlation with Placement (r)'], cmap='Blues')
+            except (ImportError, ModuleNotFoundError):
+                styled_corr = corr_df
             st.dataframe(
-                corr_df.style.background_gradient(subset=['Correlation with Placement (r)'], cmap='Blues'),
+                styled_corr,
                 use_container_width=True,
                 hide_index=True
             )
