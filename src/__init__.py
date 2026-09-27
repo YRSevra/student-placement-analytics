@@ -1,0 +1,3 @@
+"""
+Student Placement Analytics package.
+"""
